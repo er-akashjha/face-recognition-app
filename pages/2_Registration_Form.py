@@ -1,7 +1,9 @@
+import uuid
 import streamlit as st
 import cv2
 from Home import face_rec
 import numpy as np
+from datetime import datetime
 from streamlit_webrtc import webrtc_streamer
 import av
 
@@ -13,13 +15,18 @@ registrationForm = face_rec.RegistrationForm()
 #step 1 : Collect person name and role
 personName = st.text_input(label='Name',placeholder='First & Last Name')
 role = st.selectbox(label='select your role',options=('Student','Teacher'))
+current_time_regis = str(datetime.now()).replace(":","").replace(".","").replace(" ","")
+user_id = str(uuid.uuid4()).replace("-","")
+
 #step 2: Collect facial embedding of that person
 def video_callback_func(frame):
     img = frame.to_ndarray(format='bgr24')
     rec_img,embedding = registrationForm.get_embedding(img)
     
     if embedding is not None:
-        with open('face_embedding.txt',mode='ab') as f:
+        file_name = f"face_embedding_{user_id}_{current_time_regis}.txt"
+        print(f"Saving file data with filename as {file_name}")
+        with open(file_name,mode='ab') as f:
             np.savetxt(f,embedding)
 
     return av.VideoFrame.from_ndarray(rec_img,format='bgr24')
@@ -32,7 +39,8 @@ webrtc_streamer(key='registration',video_frame_callback=video_callback_func,
 #step 3: Save the data in redis database
 
 if st.button('Submit'):
-    return_val = registrationForm.save_data_in_redis_db(personName,role)
+    print(f"user_id : {user_id} and current time : {current_time_regis}")
+    return_val = registrationForm.save_data_in_redis_db(personName,role,user_id,current_time_regis)
     if return_val==True:
         st.success(f"{personName} Registered Successfully")
     else:
