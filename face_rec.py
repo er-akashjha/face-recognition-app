@@ -163,7 +163,7 @@ class RegistrationForm:
         else:
             return 'No Name'
         
-        if 'face_embedding.txt' not in os.listdir():
+        if f"face_embedding_{user_id}.txt" not in os.listdir():
             return 'file_false'
 
         file_name = f"face_embedding_{user_id}.txt"
@@ -178,7 +178,7 @@ class RegistrationForm:
         x_mean_bytes=x_mean.tobytes()
 
         r.hset(name='s2s:school',key=key,value=x_mean_bytes)
-        os.remove('face_embedding.txt')
+        os.remove(f"face_embedding_{user_id}.txt")
         self.reset()
 
         return True
