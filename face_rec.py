@@ -34,7 +34,7 @@ def retrive_data(name):
     return retrive_series_dataframe[['Name','Role','facial_features']]
 
 # configure face analysis
-faceapp = FaceAnalysis('buffalo_l','insightface_model')
+faceapp = FaceAnalysis('buffalo_sc','insightface_model')
 faceapp.prepare(ctx_id=0,det_size=(640,640), det_thresh = 0.5)
 
 # ML Search Algorithm
