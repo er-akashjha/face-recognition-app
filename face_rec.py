@@ -152,10 +152,9 @@ class RegistrationForm:
             cv2.putText(frame,"S2S",(10,10),cv2.FONT_HERSHEY_COMPLEX_SMALL,0.6,(255,0,0),3)
             embeddings = res['embedding']
             #face_embeddings.append(embeddings)
-
         return frame,embeddings
     
-    def save_data_in_redis_db(self,name,role):
+    def save_data_in_redis_db(self,name,role,user_id):
         if name is not None:
             if name.strip()!='':
                 key=f'{name}@{role}'
@@ -167,8 +166,8 @@ class RegistrationForm:
         if 'face_embedding.txt' not in os.listdir():
             return 'file_false'
 
-
-        x_array = np.loadtxt('face_embedding.txt',dtype=np.float32)
+        file_name = f"face_embedding_{user_id}.txt"
+        x_array = np.loadtxt(file_name,dtype=np.float32)
         
         received_samples = int(x_array.size/512)
         x_array=x_array.reshape(received_samples,512)
