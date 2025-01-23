@@ -26,7 +26,7 @@ def video_callback_func(frame):
 
 webrtc_streamer(key='registration',video_frame_callback=video_callback_func,
                 rtc_configuration={
-        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+        "iceServers": [{"urls": ["stun:bn-turn2.xirsys.com"]},{"username":"Ziq2HUZIVy4GSOgu-HjRW8jPTh6aBi8KMTFyica9LCSaDS3wUGkbAtV90d9KeCAkAAAAAGeSUpZhNGFrYXNoamhh","credential":"a2a41a10-d996-11ef-a0ce-0242ac140004","urls":["turn:bn-turn2.xirsys.com:80?transport=udp","turn:bn-turn2.xirsys.com:3478?transport=udp","turn:bn-turn2.xirsys.com:80?transport=tcp","turn:bn-turn2.xirsys.com:3478?transport=tcp","turns:bn-turn2.xirsys.com:443?transport=tcp","turns:bn-turn2.xirsys.com:5349?transport=tcp"]}]
     }
 )
 #step 3: Save the data in redis database
