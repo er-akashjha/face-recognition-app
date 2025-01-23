@@ -154,7 +154,7 @@ class RegistrationForm:
             #face_embeddings.append(embeddings)
         return frame,embeddings
     
-    def save_data_in_redis_db(self,name,role,user_id,current_time_regis):
+    def save_data_in_redis_db(self,name,role,user_id):
         if name is not None:
             if name.strip()!='':
                 key=f'{name}@{role}'
@@ -166,7 +166,7 @@ class RegistrationForm:
         if 'face_embedding.txt' not in os.listdir():
             return 'file_false'
 
-        file_name = f"face_embedding_{user_id}_{current_time_regis}.txt"
+        file_name = f"face_embedding_{user_id}.txt"
         x_array = np.loadtxt(file_name,dtype=np.float32)
         
         received_samples = int(x_array.size/512)
